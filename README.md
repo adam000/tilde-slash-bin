@@ -94,7 +94,7 @@ if you need to use them with `rep`.
 
 ```
 $ # computer under heavy load due to compiling gcc, I want to monitor load over time
-$ rep uptime
+$ rep 1 uptime
  14:26:09 up 354 days, 14 min, 16 users,  load average: 5.40, 5.69, 7.51
 ...
 ```
