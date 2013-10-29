@@ -51,6 +51,8 @@ defaults to 2 seconds, `rep` does not have a default). `rep` is better than
 `watch` in some cases because you can see the output of the older commands,
 while `watch` will only show you the output of the most recent command.
 
+**NOTE**: unfortunately this doesn't work with aliases or functions yet.
+
 ### Example
 
 ```
