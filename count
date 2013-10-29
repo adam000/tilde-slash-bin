@@ -1,0 +1,6 @@
+#!/bin/bash
+# Returns the number of characters after `count `
+# Better than 'wc' because it includes spaces and other whitespace
+
+temp_var="$@"
+echo ${#temp_var}

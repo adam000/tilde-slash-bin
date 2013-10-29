@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Author: ahintz <adam@ifixit.com>
+
+# Git Snapshot: make a stash of your current status and then immediately apply
+# it so you can continue work
+
+# Takes parameters -u, -p, and an optional message (which defaults to 'Snapshot:
+# <branchname> <datetime>')
+
+if [[ $# == 1 && ($1 == -h || $1 == --help || $1 == help) ]]; then
+   echo "Usage:"
+   echo "    git snapshot [options] [message]"
+   echo
+   echo "Options:"
+   echo "    -u  Use '--untracked' when stashing"
+   echo "    -p  Use '--patch' when stashing"
+   echo
+   echo "'Message' is prepended by \"Snapshot:\" or defaults to:"
+   echo "Snapshot: <branchname> <datetime>"
+   exit 1
+fi
+
+UNTRACKED=0
+PATCH=0
+
+if [[ $1 == -u ]]; then
+   UNTRACKED=1
+   shift 1
+elif [[ $1 == -p ]]; then
+   PATCH=1
+   shift 1
+else
+   break
+fi
+
+SNAPSHOT="Snapshot:"
+
+# If there's something left, it's what we use in the snapshot name
+if [[ ! -z "$@" ]]; then
+   SNAPSHOT="$SNAPSHOT $@"
+else
+   BRANCHNAME=`git rev-parse --abbrev-ref HEAD`
+   if [[ $BRANCHNAME == HEAD ]]; then
+      # HEAD is not a suitable differentiator; we're not on a branch. So use
+      # the short commit hash
+      BRANCHNAME=`git rev-parse --short HEAD`
+   fi
+   # Default to 'Snapshot: <branchname> <datetime>'
+   SNAPSHOT="$SNAPSHOT $BRANCHNAME `date`"
+fi
+
+COMMAND="git stash save"
+
+if [[ $UNTRACKED == 1 ]]; then
+   COMMAND="$COMMAND -u"
+fi
+
+if [[ $PATCH == 1 ]]; then
+   COMMAND="$COMMAND -p"
+fi
+
+COMMAND="$COMMAND \"$SNAPSHOT\""
+
+$COMMAND

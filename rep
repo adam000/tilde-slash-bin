@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Repeat a command every $1 seconds
+
+time="$1"
+shift 1
+
+while : ; do
+    eval $@
+
+    sleep "$time"
+    if [ $? -ne 0 ] ; then
+      exit $?
+    fi
+done
