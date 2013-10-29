@@ -44,6 +44,41 @@ HEAD is now at d3412bc My commit message
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
+## mvln
+
+Ever put something in a directory, then realized it needs to be somewhere else,
+but you still want to symlink to the current directory? `mvln` does this in one
+fluid step.
+
+### Example
+
+```
+$ mvln ~/git/my-awesome-command /usr/local/bin/my-awesome-command
+
+$ ll ~/git/my-awesome-command
+lrwxr-xr-x  1 username  root  3 Oct 29 16:18 /Users/username/git/my-awesome-command -> /usr/local/bin/my-awesome-command
+```
+
+## pingg
+
+Ping google.com. Keep trying to ping it as long as it's failing. Optionally,
+supply a parameter to specify how often `ping` should be pinging (the number is
+passed as the argument to the `-i` parameter).
+
+Useful if you want to check connectivity to the Internet.
+
+### Example
+
+```
+$ pingg
+PING google.com (74.125.239.5): 56 data bytes
+64 bytes from 74.125.239.5: icmp_seq=0 ttl=58 time=5.394 ms
+^C
+--- google.com ping statistics ---
+1 packets transmitted, 1 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 5.394/5.394/5.394/0.000 ms
+```
+
 ## rep
 
 `rep` is like `watch` in that you can repeat commands every n seconds (`watch`
@@ -63,3 +98,4 @@ $ rep uptime
  14:26:09 up 354 days, 14 min, 16 users,  load average: 5.40, 5.69, 7.51
 ...
 ```
+

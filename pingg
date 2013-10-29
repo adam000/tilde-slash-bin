@@ -1,0 +1,13 @@
+#!/bin/bash
+while true; do
+    if [[ -n "$1" ]]; then
+        sleep 1
+        ping -i $1 google.com
+    else
+        sleep 1
+        ping google.com
+    fi
+    if [[ $? == "0" ]]; then
+        exit 0
+    fi
+done
