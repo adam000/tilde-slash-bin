@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 # Repeat a command every $1 seconds
 
@@ -9,7 +9,7 @@ while : ; do
     eval $@
 
     sleep "$time"
-    if [ $? -ne 0 ] ; then
-      exit $?
+    if [[ $? != 0 ]]; then
+        exit $?
     fi
 done

@@ -51,7 +51,9 @@ defaults to 2 seconds, `rep` does not have a default). `rep` is better than
 `watch` in some cases because you can see the output of the older commands,
 while `watch` will only show you the output of the most recent command.
 
-**NOTE**: unfortunately this doesn't work with aliases or functions yet.
+While this does work with functions, it fails with aliases due to [how bash
+works](http://stackoverflow.com/a/11136867/211176). Convert aliases to functions
+if you need to use them with `rep`.
 
 ### Example
 
