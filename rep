@@ -1,5 +1,7 @@
 #!/bin/bash -i
 
+# Author: Adam Hintz <adamh.zero@gmail.com>
+
 # Repeat a command every $1 seconds
 
 time="$1"

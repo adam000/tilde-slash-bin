@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Author: Adam Hintz <adamh.zero@gmail.com>
+
 while true; do
     if [[ -n "$1" ]]; then
         sleep 1

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Author: ahintz <adam@ifixit.com>
+# Author: Adam Hintz <adamh.zero@gmail.com>
 
 # Git Snapshot: make a stash of your current status and then immediately apply
 # it so you can continue work

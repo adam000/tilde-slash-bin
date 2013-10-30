@@ -1,7 +1,15 @@
 Tilde Slash Bin - Commands That Make Life Easier
 ================================================
 
-Some commands that I've made and kept in the ~/bin of every machine I use.
+Some commands that I've made and kept in the `~/bin` of every machine I use.
+
+These bash utility scripts are not one-size-fits-all, so I would recommend
+symlinking the useful scripts from your repo directory to `~/bin` instead of
+cloning into `~/bin`.
+
+I've used these scripts on OS X, Ubuntu, and CentOS.
+
+This code is released under the MIT license. See LICENSE for details.
 
 ## count
 
