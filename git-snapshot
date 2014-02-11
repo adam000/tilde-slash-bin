@@ -58,9 +58,17 @@ fi
 
 COMMAND="$COMMAND \"$SNAPSHOT\""
 
-$COMMAND
+OUTPUT=`$COMMAND`
 
-if [[ $? == 0 ]]; then
+# Unfortunately `git stash save` doesn't return an error if there are no local
+# changes to save, so you have to look through the output for a failure and
+# fail it yourself.
+echo "$OUTPUT" | grep "No local changes to save" > /dev/null 2>&1
+
+if [[ $? != 0 ]]; then
     git stash apply
+else
+    echo "No local changes to save; snapshot not saved"
+    exit 1
 fi
 
