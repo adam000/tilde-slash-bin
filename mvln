@@ -4,8 +4,6 @@
 
 if [[ $# != 2 ]]; then
     echo "Usage: mvln <current> <new>"
-    # TODO can fix where I don't need this second line?
-    echo "(where <new> contains the basename of <current>)"
     exit 1
 fi
 
@@ -14,5 +12,4 @@ NEW=$2
 
 mkdir -p `dirname $NEW`
 mv $CURRENT $NEW
-# TODO in order to replace if something already exists, -sif ?
 ln -s $NEW $CURRENT
