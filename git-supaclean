@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Author: Adam Hintz <adamh.zero@gmail.com>
+
+# Git Supaclean: When you want your working directory to be spotless. Removes
+# untracked files and changes to tracked files, even if staged.
+
+git stash -u > /dev/null && git stash drop > /dev/null
