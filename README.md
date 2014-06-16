@@ -104,6 +104,38 @@ if you need to use them with `rep`.
 $ # computer under heavy load due to compiling gcc, I want to monitor load over time
 $ rep 1 uptime
  14:26:09 up 354 days, 14 min, 16 users,  load average: 5.40, 5.69, 7.51
+ 14:26:10 up 354 days, 14 min, 16 users,  load average: 5.45, 5.70, 7.48
 ...
 ```
 
+## git-supaclean
+
+`git-supaclean` is when you want your working directory to be really, really
+clean. It removes staged, unstaged, and untracked changes to leave your code
+spotless.
+
+### Example
+
+```
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   foo
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   bar
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        baz
+$ git supaclean
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
