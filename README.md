@@ -108,9 +108,9 @@ $ rep 1 uptime
 ...
 ```
 
-## git-supaclean
+## git-supa-clean
 
-`git-supaclean` is when you want your working directory to be really, really
+`git-supa-clean` is when you want your working directory to be really, really
 clean. It removes staged, unstaged, and untracked changes to leave your code
 spotless.
 
@@ -134,7 +134,7 @@ Untracked files:
   (use "git add <file>..." to include in what will be committed)
 
         baz
-$ git supaclean
+$ git supa-clean
 $ git status
 On branch master
 nothing to commit, working directory clean
