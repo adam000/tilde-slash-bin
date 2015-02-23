@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+# Git blame on a grep! Blep!
+git grep -n $* | while IFS=: read i j k; do git --no-pager blame -L $j,$j $i; done

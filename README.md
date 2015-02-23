@@ -139,3 +139,32 @@ $ git status
 On branch master
 nothing to commit, working directory clean
 ```
+
+## git-supa-quickfix
+
+`git-supa-quickfix` adds all changes, ammends the latest commit, and force
+pushes that commit. Sometimes you accidentally typo something and realize it
+just moments after. Just supa-quickfix it!
+
+### Example
+
+*tbd*
+
+## git-blep
+
+`git-blep` does a git blame on a git grep! How cool!
+
+### Example
+
+*tbd*
+
+## git-stash-staged
+
+Sometimes it's easier to `git add` some files or `git add -p` some particular
+changes than to `git stash save -p` those changes. If you already have some
+changes staged and you want to stash them instead of committing, this is the
+tool for you!
+
+### Example
+
+*tbd*
