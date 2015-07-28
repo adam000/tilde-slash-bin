@@ -32,11 +32,11 @@ elif [[ $1 == -p ]]; then
    shift 1
 fi
 
-SNAPSHOT="Snapshot:"
+SNAPSHOT=""
 
 # If there's something left, it's what we use in the snapshot name
 if [[ ! -z "$@" ]]; then
-   SNAPSHOT="$SNAPSHOT $@"
+   SNAPSHOT="Snapshot: $@"
 else
    BRANCHNAME=`git rev-parse --abbrev-ref HEAD`
    if [[ $BRANCHNAME == HEAD ]]; then
@@ -44,8 +44,8 @@ else
       # the short commit hash
       BRANCHNAME=`git rev-parse --short HEAD`
    fi
-   # Default to 'Snapshot: <branchname> <datetime>'
-   SNAPSHOT="$SNAPSHOT $BRANCHNAME `date`"
+   # Default to 'Snapshot @ <datetime>'
+   SNAPSHOT="Snapshot @ `date`"
 fi
 
 COMMAND="git stash save"
