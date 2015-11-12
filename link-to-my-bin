@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "--help" || $# != 1 || ! -e "$1" ]]; then
+  echo "Usage: $0 <file to symlink to ~/bin>"
+fi
+
+# TODO make other scripts consistently use $() instead of ``
+CURRENT=$(pwd)
+
+cd ~/bin
+
+ln -s $CURRENT/"$1" .
