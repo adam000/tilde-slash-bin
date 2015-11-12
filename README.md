@@ -168,3 +168,12 @@ tool for you!
 ### Example
 
 *tbd*
+
+## goplayground
+
+Makes a "hello world" go program in your editor. Upon exiting, `goplayground`
+will attempt to run the program.
+
+### Example
+
+*tbd*

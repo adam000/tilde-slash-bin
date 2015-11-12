@@ -1,0 +1,34 @@
+#!/bin/bash
+
+while true; do
+    DIR=/tmp/`printf %05d $RANDOM`
+    if [[ ! -e $DIR ]]; then
+        break
+    fi
+done
+
+echo Making $DIR
+mkdir $DIR
+cd $DIR
+
+cat << EOF > main.go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, playground")
+}
+EOF
+
+return=0
+while [[ $return == 0 ]]; do
+    vim main.go
+    if [[ $? != 0 ]]; then
+        return
+    fi
+
+    echo Output:
+    go build -o a.out && ./a.out
+    return=$?
+done
