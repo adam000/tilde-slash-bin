@@ -1,3 +1,0 @@
-# Ignore everything in this directory. This allows user to add ~/bin/local to
-# $PATH for things that shouldn't be synced with this repo
-*
