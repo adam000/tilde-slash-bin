@@ -1,0 +1,1 @@
+git grep -I --line-number --color=always "$@"
