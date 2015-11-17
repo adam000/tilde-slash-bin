@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# TODO add param validation
+set +e
+
+git branch $1
+git checkout $1
