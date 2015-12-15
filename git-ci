@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+COMMAND="git commit -m"
+
+if [[ $(git diff --staged | wc -l) -eq 0 ]]; then
+    COMMAND="git commit -am"
+fi
+
+$COMMAND "$*"
