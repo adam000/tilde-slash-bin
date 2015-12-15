@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
 if [[ "$1" == "--help" || $# != 1 || ! -e "$1" ]]; then
-  echo "Usage: $0 <file to symlink to ~/bin>"
+    echo "Usage: $0 <file to symlink to ~/bin>"
+    exit 0
+fi
+
+if [[ -e "~/bin/$1" ]]; then
+    echo "Destination file exists. Aborting..."
+    exit 1
 fi
 
 # TODO make other scripts consistently use $() instead of ``
