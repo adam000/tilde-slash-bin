@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Requires is-integer
+
+if [[ "$1" == "--help" ]] || ! is-integer "$1"; then
+  echo "Usage: $0 [<random string length>]"
+  exit 1
+fi
+
+LC_CTYPE=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c ${1:-32}
+echo
