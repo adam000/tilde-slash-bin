@@ -2,7 +2,10 @@
 
 set +e
 
-# TODO add param validation
+if [[ $# != 1 || $1 == "--help" ]]; then
+    echo "Usage: git-branchout <branch-name>"
+    exit 0
+fi
 
 STASH="false"
 if ! git-is-clean; then
@@ -10,6 +13,7 @@ if ! git-is-clean; then
     git stash save -u "Automatic stash by $0"
 fi
 
+echo "Creating branch $1..."
 git branch $1
 git checkout $1
 
