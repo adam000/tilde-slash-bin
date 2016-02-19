@@ -1,9 +1,12 @@
 #!/bin/bash
-
 # Author: Adam Hintz <adamh.zero@gmail.com>
 
+# TODO: make it so that including the name is only necessary for the current. If
+# it's not in new, it can be appended
 if [[ $# != 2 ]]; then
     echo "Usage: mvln <current> <new>"
+    echo "The name of the file / directory must be included in both parameters."
+    echo "Example: mvln ~/foo/bar/baz ~/baz"
     exit 1
 fi
 
