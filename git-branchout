@@ -14,6 +14,7 @@ if ! git-is-clean; then
 fi
 
 echo "Creating branch $1..."
+git pull
 git branch $1
 git checkout $1
 
