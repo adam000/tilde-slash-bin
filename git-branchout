@@ -13,8 +13,8 @@ if ! git-is-clean; then
     git stash save -u "Automatic stash by $0"
 fi
 
-echo "Creating branch $1..."
 git pull
+echo "Creating branch $1..."
 git branch $1
 git checkout $1
 
