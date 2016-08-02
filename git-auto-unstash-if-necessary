@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+MESSAGE=$(git stash list | head -1 | awk 'BEGIN {FS=": "} {print $3}')
+
+if [[ "$MESSAGE" =~ "git-auto-stash-if-necessary" ]]; then
+    echo "Popping stash..."
+    git stash pop
+fi

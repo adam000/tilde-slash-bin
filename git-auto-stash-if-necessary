@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if ! git-is-clean; then
+    echo "Creating stash..."
+    git stash save -u "Automatic stash by git-auto-stash-if-necessary"
+fi
+

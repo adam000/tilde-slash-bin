@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Test the current branch by merging the mainline into a new branch. Hopefully
+# there aren't conflicts.
+
+TEST_PREFIX=test-
+TEST_PREFIX_SIZE=${#TEST_PREFIX}
+MAINLINE_SETTING=core.mainline
+
+MAINLINE=$(git config $MAINLINE_SETTING)
+if [[ -z "$MAINLINE" ]]; then
+    echo "Please set a mainline via:"
+    echo "   git config $MAINLINE_SETTING <origin/master>"
+    echo
+    echo "   (replace the content in angle brackets with your repository and"
+    echo "   main branch names)"
+    exit -1
+fi
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+git auto-stash-if-necessary
+
+# If the current branch is a test branch, back up to the real branch and delete
+# the old test branch.
+if [[ "$CURRENT_BRANCH" == "$TEST_PREFIX"* ]]; then
+    CURRENT_BRANCH="${CURRENT_BRANCH:$TEST_PREFIX_SIZE}"
+    git checkout "$CURRENT_BRANCH"
+fi
+
+TEST_BRANCH_NAME="$TEST_PREFIX$CURRENT_BRANCH"
+
+if git rev-parse --verify --quiet "$TEST_BRANCH_NAME"; then
+    git checkout "$MAINLINE"
+    git branch -D "$TEST_BRANCH_NAME"
+fi
+
+
+git branch "$TEST_BRANCH_NAME"
+git checkout "$TEST_BRANCH_NAME"
+git fetch --all 1> /dev/null 2>&1
+git merge "$MAINLINE"
+
+git auto-unstash-if-necessary
