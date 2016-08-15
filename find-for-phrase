@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Search a directory for files containing a certain amount of text.
+# The motivation for this: could never remember the args for find / grep, and
+# also automatically ignoring stderr (directories that report 'access denied',
+# of which there are many when searching the root directory) is convenient.
+
+if [[ $# != 2 ]]; then
+    echo "find-for-phrase does a case-insensitive search for a string within a given directory."
+    echo
+    echo "Usage: find-for-phrase <directory to search> <phrase to search for>"
+    echo
+    echo "Example: find-for-phrase / 'the quick brown fox'"
+    exit 1
+fi
+
+find "$1" -type f -exec grep -i "$2" {} + 2> /dev/null
