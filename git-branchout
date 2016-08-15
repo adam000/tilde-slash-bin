@@ -10,6 +10,7 @@ fi
 git auto-stash-if-necessary > /dev/null
 
 git pull
+
 echo "Creating branch $1..."
 git branch $1
 git checkout $1
