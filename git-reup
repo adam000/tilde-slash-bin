@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Reup! Fetch a remote and then try to rebase your branch onto it
+
+set +eo
+
+USAGE=<<EOF
+Usage: git reup [--force-rebase]
+
+--force-rebase: rebase this branch even if it has a remote equivalent.
+
+Rebase and update the current branch based on a mainline branch.
+
+Uses the following git configs:
+mainline.remote: the name of the remote repository to use. Defaults to origin.
+mainline.branch: the name of the remote branch to use. Defaults to master.
+EOF
+
+FORCE_REBASE="false"
+while [[ $# -gt 1 ]]; do
+    key="$1"
+    case $key in
+        -h|--help|help)
+            echo $USAGE
+            exit 0
+        ;;
+        --force-rebase)
+            FORCE_REBASE="true"
+        ;;
+    esac
+done
+
+
+
+REMOTE=$(git config mainline.remote)
+REMOTE=${REMOTE:-origin}
+BASE_BRANCH=$(git config mainline.branch)
+BASE_BRANCH=${BASE_BRANCH:-master}
+
+git fetch $REMOTE
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+git auto-stash-if-necessary
+
+set -e
+
+function rebase() {
+    git rebase $REMOTE/$BASE_BRANCH
+    if [[ $? != 0 ]]; then
+        git rebase --abort
+        git checkout $BRANCH
+        echo "Rebase failed due to conflicts"
+
+        git auto-unstash-if-necessary
+        exit 1
+    fi
+}
+
+# If the branch exists, don't do a rebase but pull instead (unless overridden).
+if git rev-parse --symbolic-full-name @{u}; then
+   if  [[ "$FORCE_REBASE" == "true" ]]; then
+        rebase
+    else
+        git pull
+    fi
+else
+    rebase
+fi
+
+git auto-unstash-if-necessary
+
