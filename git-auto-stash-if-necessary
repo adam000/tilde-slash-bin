@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if git-auto-stash-check && git-is-clean; then
+    echo "You already have an auto stash; some previous operation must have failed."
+    echo "Deal with your most recent stash entry and try again"
+    exit 1
+fi
+
 if ! git-is-clean; then
     echo "Creating stash..."
     git stash save -u "Automatic stash by git-auto-stash-if-necessary"

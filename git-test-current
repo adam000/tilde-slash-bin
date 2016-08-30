@@ -5,17 +5,10 @@
 
 TEST_PREFIX=test-
 TEST_PREFIX_SIZE=${#TEST_PREFIX}
-MAINLINE_SETTING=core.mainline
+MAINLINE_REPO=$(git config mainline.repo)
+MAINLINE_BRANCH=$(git config mainline.branch)
 
-MAINLINE=$(git config $MAINLINE_SETTING)
-if [[ -z "$MAINLINE" ]]; then
-    echo "Please set a mainline via:"
-    echo "   git config $MAINLINE_SETTING <origin/master>"
-    echo
-    echo "   (replace the content in angle brackets with your repository and"
-    echo "   main branch names)"
-    exit -1
-fi
+MAINLINE=${MAINLINE_REPO:-origin}/${MAINLINE_BRANCH:-master}
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
