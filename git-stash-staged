@@ -6,4 +6,5 @@ if [[ $# != 1 || $1 == "--help" ]]; then
     exit 0
 fi
 
-git stash --keep-index && git stash -u $1 && git stash pop stash@{1}
+# It's been a while; I think this is correct?
+git stash push --keep-index && git stash -u $1 && git stash pop stash@{1}
