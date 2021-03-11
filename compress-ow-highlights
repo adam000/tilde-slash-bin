@@ -3,6 +3,6 @@
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 
-ls /mnt/c/Users/atg/Documents/Overwatch/videos/overwatch/*.mp4 | xargs -n 1 -l -P 3 -i{} bash -c 'ffmpeg -hide_banner -loglevel panic -ss 00:00:04.800 -i "{}" -t 00:00:12.500 -c copy "/mnt/e/Shortened OW Highlights/$(basename "{}")" && rm "{}"'
+ls /mnt/c/Users/Adam/Documents/Overwatch/videos/overwatch/*.mp4 | xargs -n 1 -l -P 3 -i{} bash -c 'ffmpeg -hide_banner -loglevel panic -ss 00:00:04.800 -i "{}" -t 00:00:12.500 -c copy "/mnt/c/Users/Adam/Documents/Overwatch/videos/shortened/$(basename "{}")" && rm "{}"'
 
 IFS=$SAVEIFS
