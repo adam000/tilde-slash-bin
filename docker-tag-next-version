@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+if [[ $# < 1 || $# > 2 ]]; then
+    echo "Usage: tag-next-version.bash <Docker repository> [<Dockerfile>]"
+    echo "(should be called in the directory where the Dockerfile for that repo exists)"
+fi
+
+REPOSITORY=$1
+DOCKERFILE=${2:-"Dockerfile"}
+
+REGISTRY=localhost:2005
+
+NEXT_VERSION=$(docker images | awk "BEGIN { highestVersion = 0 } NR > 1 && \$1 == \"$REPOSITORY\" { if (\$2 != \"latest\" && \$2 > highestVersion) { highestVersion = \$2; } } END { print ++highestVersion }")
+
+if ! [[ -f "$DOCKERFILE" ]]; then
+    echo "No $DOCKERFILE found; aborting"
+    exit 1
+fi
+
+if [[ $NEXT_VERSION == 1 ]]; then
+    echo "Did not find / parse any versions for '$REPOSITORY'"
+    echo -n "Are you sure this is the correct name? "
+    while true; do
+        read -p "[Y/n]" yn
+        case $yn in
+            [Nn]* ) exit 1;;
+            * ) break;;
+        esac
+    done
+fi
+
+docker build -f $DOCKERFILE -t $REPOSITORY:$NEXT_VERSION .
+docker tag $REPOSITORY:$NEXT_VERSION $REPOSITORY:latest
+docker tag $REPOSITORY:$NEXT_VERSION $REGISTRY/$REPOSITORY:$NEXT_VERSION
+docker push $REGISTRY/$REPOSITORY:$NEXT_VERSION
+if [[ $? != 0 ]]; then
+    echo
+    echo "Retrying with Docker creds..."
+    export GPG_TTY=$(tty)
+    echo
+    docker push $REGISTRY/$REPOSITORY:$NEXT_VERSION
+fi
+docker tag $REPOSITORY:$NEXT_VERSION $REGISTRY/$REPOSITORY:latest
+docker push $REGISTRY/$REPOSITORY:latest
