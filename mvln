@@ -14,5 +14,6 @@ CURRENT=$1
 NEW=$2
 
 mkdir -p `dirname $NEW`
+# TODO if $NEW is a file, diff with $CURRENT and abort if there's a diff
 mv $CURRENT $NEW
 ln -s $NEW $CURRENT
