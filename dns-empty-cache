@@ -1,0 +1,7 @@
+
+if [[ "$OSTYPE" == 'darwin'* ]]; then
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder
+else
+    echo "ERROR: unable to determine OSTYPE from '$OSTYPE'"
+fi
