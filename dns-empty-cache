@@ -3,6 +3,8 @@
 if [[ "$OSTYPE" == 'darwin'* ]]; then
     sudo dscacheutil -flushcache
     sudo killall -HUP mDNSResponder
+elif [[ "$(uname -a)" == *'Ubuntu'* ]]; then
+    sudo systemd-resolve --flush-caches
 else
-    echo "ERROR: unable to determine OSTYPE from '$OSTYPE'"
+    echo "ERROR: unable to determine OSTYPE from '$OSTYPE' / uname '$(uname -a)'"
 fi
