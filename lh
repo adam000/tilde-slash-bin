@@ -1,3 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-open "http://localhost:${1:-8080}"
+if [[ "$OSTYPE" == 'darwin'* ]]; then
+    open "http://localhost:${1:-8080}"
+else
+    echo "ERROR: unable to determine OSTYPE from '$OSTYPE'"
+fi
