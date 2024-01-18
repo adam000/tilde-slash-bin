@@ -1,19 +1,40 @@
 #!/bin/bash
-# Author: Adam Hintz <adamh.zero@gmail.com>
 
-# TODO: make it so that including the name is only necessary for the current. If
-# it's not in new, it can be appended
-if [[ $# != 2 ]]; then
-    echo "Usage: mvln <current> <new>"
-    echo "The name of the file / directory must be included in both parameters."
-    echo "Example: mvln ~/foo/bar/baz ~/baz"
-    exit 1
+if [[ $# -gt 3 || $# -lt 2 ]]; then
+    echo "Usage: mvln [-f] <current> <new>"
+    echo "Example: mvln .bashrc ~/src/dotfiles/.bashrc"
+    exit 0
 fi
 
-CURRENT=$1
-NEW=$2
+FORCE=
+if [[ "$1" == "-f" ]]; then
+    FORCE=true
+    shift
+fi
 
-mkdir -p `dirname $NEW`
-# TODO if $NEW is a file, diff with $CURRENT and abort if there's a diff
-mv $CURRENT $NEW
-ln -s $NEW $CURRENT
+CURRENT="$1"
+NEW="$2"
+
+[[ -e "$(dirname $NEW)" ]] || mkdir -p "$(dirname $NEW)"
+
+if [[ -e "$NEW" ]]; then
+    if [[ -d "$NEW" ]]; then
+        echo "'$NEW' is an existing directory; refusing to remove it"
+        exit 1
+    fi
+
+    if [[ -L "$CURRENT" ]]; then
+        echo "'$CURRENT' is already a symlink"
+        exit 1
+    fi
+
+    if [[ "$FORCE" != true ]]; then
+        if ! diff -q "$CURRENT" "$NEW" > /dev/null; then
+            echo "File '$NEW' already exists and is not the same as '$CURRENT'"
+            exit 1
+        fi
+    fi
+
+    mv $CURRENT $NEW
+    ln -s $NEW $CURRENT
+fi
