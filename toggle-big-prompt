@@ -1,0 +1,19 @@
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "Detected that this script is not being sourced. Please source this script to run it (e.g. \`. ./this_script\` or \`source ./this_script\`)"
+    exit 1
+fi
+
+if ! [[ -z "$OLD_RPROMPT" ]]; then
+    export RPROMPT="$OLD_RPROMPT"
+    unset OLD_RPROMPT
+    export PROMPT="$OLD_PROMPT"
+    unset OLD_PROMPT
+else
+    export OLD_RPROMPT="$RPROMPT"
+    unset RPROMPT
+    export OLD_PROMPT="$PROMPT"
+    export PROMPT="
+\$ "
+fi
+
