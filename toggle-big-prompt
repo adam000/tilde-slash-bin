@@ -1,5 +1,7 @@
+#!/usr/bin/env zsh
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+if [[ "$ZSH_EVAL_CONTEXT" == "toplevel" ]]; then
+    echo "$ZSH_EVAL_CONTEXT"
     echo "Detected that this script is not being sourced. Please source this script to run it (e.g. \`. ./this_script\` or \`source ./this_script\`)"
     exit 1
 fi
