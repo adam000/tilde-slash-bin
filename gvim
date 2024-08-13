@@ -1,0 +1,22 @@
+#!/bin/bash
+#################################################################
+# place this script on your $PATH and chmod it to be executable
+#################################################################
+
+# assumes C:\ is mounted to /c, change any occurance of /c to /mnt/c if
+# you are using the default WSL mount point for C:\
+CMD='/mnt/c/Windows/System32/cmd.exe'
+#location of gvim
+GVIM='/mnt/c/Program Files/Vim/vim91/gvim.exe'
+FILE=`realpath "${1:-.}"`
+if [[ $FILE == /mnt/c/* ]] ;
+then
+  FILE=${FILE/\/mnt\/c\//C:\\}
+else
+# replace the first forward slash
+FILE=${FILE/\//\\\\wsl\$\\Ubuntu-20.04\\}
+fi
+# replace the rest
+FILE=${FILE//\//\\}
+echo Launch gvim for file: $FILE
+`"$GVIM" $FILE` &
