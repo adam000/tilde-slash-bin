@@ -1,22 +1,36 @@
-#!/bin/bash
-#################################################################
-# place this script on your $PATH and chmod it to be executable
-#################################################################
+#!/usr/bin/env zsh
 
 # assumes C:\ is mounted to /c, change any occurance of /c to /mnt/c if
 # you are using the default WSL mount point for C:\
-CMD='/mnt/c/Windows/System32/cmd.exe'
-#location of gvim
-GVIM='/mnt/c/Program Files/Vim/vim91/gvim.exe'
-FILE=`realpath "${1:-.}"`
-if [[ $FILE == /mnt/c/* ]] ;
-then
-  FILE=${FILE/\/mnt\/c\//C:\\}
+
+# location of gvim
+GVIM_DEFAULT='C:\Program Files\Vim\vim91\gvim.exe'
+GVIM=${GVIM:-$GVIM_DEFAULT}
+
+if [[ $# == 0 ]]; then
+    pwsh.exe -Command "Start '$GVIM'"
 else
-# replace the first forward slash
-FILE=${FILE/\//\\\\wsl\$\\Ubuntu-20.04\\}
+    FILE=`realpath "${1:-.}"`
+
+    if stat -c "%A" "$FILE" | grep -q "x"; then
+        read -q "REPLY?This file has execute bits set. If you save the file in gvim, it will lose those. Proceed? [y/N] "
+        echo
+        if [[ "$REPLY" != "y" && "$REPLY" != "Y" ]]; then
+            echo "Aborting"
+            exit 1
+        fi
+    fi
+    if [[ $FILE == /mnt/c/* ]]; then
+        FILE=${FILE/\/mnt\/c\//C:\\}
+    else
+        # replace the first forward slash
+        # TODO figure out how to name current WSL repo
+        FILE=${FILE/\//\\\\wsl\$\\Ubuntu-20.04\\}
+    fi
+
+    # replace the rest
+    FILE=${FILE//\//\\}
+
+    printf 'Launching gvim for file: "%s"\n' "$FILE"
+    pwsh.exe -Command "Start '$GVIM' $FILE"
 fi
-# replace the rest
-FILE=${FILE//\//\\}
-echo Launch gvim for file: $FILE
-`"$GVIM" $FILE` &
