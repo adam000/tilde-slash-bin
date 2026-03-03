@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+# location of neovide
+NEOVIDE_DEFAULT='C:\Program Files\Neovide\neovide.exe'
+NEOVIDE=${NEOVIDE:-$NEOVIDE_DEFAULT}
+
+if [[ $# == 0 ]]; then
+    pwsh.exe -Command "Start '$NEOVIDE' -ArgumentList '--wsl'"
+else
+    FILE="$1"
+    printf 'Launching neovide for file: "%s"\n' "$FILE"
+    pwsh.exe -Command "Start '$NEOVIDE' -ArgumentList '--wsl', $FILE"
+fi
